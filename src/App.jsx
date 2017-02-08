@@ -29,15 +29,11 @@ class App extends Component {
     ws.addEventListener('message', (event) => {
       let data = JSON.parse(event.data);
       let type = data.type;
-
-      console.log(data.userid);
-      console.log(this.state.currentUser.id);
-
-      if (type === "updateUsername" && data.userid === this.state.currentUser.id) {
+      if (type === "updateUsername") {
         console.log(`Received from server: ${event.data}`);
         let newUser = data.newUsername;
         let messages = this.state.messages.concat(data);
-        this.setState({currentUser: {id: this.state.currentUser.id, name: newUser}, messages: messages});
+        this.setState({messages: messages});
       }
     });
 
@@ -66,11 +62,11 @@ class App extends Component {
         let username = {
           type: "updateUsername",
           id: uuid.v1(),
-          userid: this.state.currentUser.id,
           oldUsername: this.state.currentUser.name,
           newUsername: e.target.value,
           content: this.state.currentUser.name + " changed their name to: " + e.target.value
         };
+        this.state.currentUser.name = e.target.value;
         ws.send(JSON.stringify(username));
       }
     }
@@ -90,7 +86,7 @@ class App extends Component {
     }
 
     this.state = {
-      currentUser: {id: uuid.v1(), name: "Anonymous"},
+      currentUser: {name: "Anonymous"},
       messages: []
     }
   };
