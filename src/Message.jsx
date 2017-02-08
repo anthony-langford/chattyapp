@@ -4,8 +4,9 @@ class Message extends Component {
   render() {
     console.log("Rendering <Message/>");
     return (
-      <div className="message system">
-        Anonymous1 changed their name to nomnom.
+      <div className="message content">
+        <span className="username">{this.props.username}</span>
+        <span className="content">{this.props.content}</span>
       </div>
     )
   }

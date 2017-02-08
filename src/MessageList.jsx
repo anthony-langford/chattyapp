@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Message from './Message.jsx';
 
 class MessageList extends Component {
   render() {
@@ -6,18 +7,15 @@ class MessageList extends Component {
 
     return (
 
-        {this.props.messages.map((message) =>
-          <div className="message">
-            <span className="username">Anonymous1</span>
-            <span className="content">I won't be impressed with technology until I can download food.</span>
-          </div>
-        )}
-
-
-      // <div className="message">
-      //   <span className="username">Anonymous1</span>
-      //   <span className="content">I won't be impressed with technology until I can download food.</span>
-      // </div>
+      <div id="message-list">
+        {
+          this.props.messages.map( (message) => {
+            return (
+              <Message key={message.id} username={message.username} content={message.content} />
+            )
+          })
+        }
+      </div>
     )
   }
 }
