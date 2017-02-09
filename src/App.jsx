@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import NavBar from './NavBar.jsx';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 const ws = new WebSocket('ws://localhost:4000');
@@ -19,6 +20,10 @@ class App extends Component {
       let messages = this.state.messages.concat(data);
       let type = data.type;
       switch(type) {
+        case "updateUserCount":
+          console.log(`Received from server: ${event.data}`);
+          this.setState({userCount: data.userCount, userColor: data.userColor});
+          break;
         case "incomingMessage":
           console.log(`Received from server: ${event.data}`);
           this.setState({messages: messages});
@@ -42,7 +47,7 @@ class App extends Component {
       const newMessage = {
         id: uuid.v1(),
         username: "Michelle",
-        content: "Hello there!"
+        content: "Hello there!",
       };
       const messages = this.state.messages.concat(newMessage);
       this.setState({messages: messages})
@@ -53,12 +58,11 @@ class App extends Component {
       const newMessage = {
         id: uuid.v1(),
         username: "Bob",
-        content: "fuck off, Michelle"
+        content: "fuck off, Michelle https://yt3.ggpht.com/-V92UP8yaNyQ/AAAAAAAAAAI/AAAAAAAAAAA/zOYDMx8Qk3c/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"
       };
       const messages = this.state.messages.concat(newMessage);
       this.setState({messages: messages})
     }, 5000);
-
 
   }
 
@@ -86,7 +90,8 @@ class App extends Component {
             type: "postMessage",
             id: uuid.v1(),
             username: this.state.currentUser.name,
-            content: e.target.value
+            content: e.target.value,
+            style: {color: this.state.userColor}
           };
           ws.send(JSON.stringify(message));
           document.getElementById("new-message").value = "";
@@ -95,7 +100,9 @@ class App extends Component {
 
     this.state = {
       currentUser: {name: "Anonymous"},
-      messages: []
+      messages: [],
+      userCount: 0,
+      userColor: ""
     }
   };
 
@@ -103,14 +110,13 @@ class App extends Component {
     console.log("Rendering <App/>");
     return (
       <div className="wrapper">
-        <nav>
-          <h1>Chatty</h1>
-        </nav>
-          <MessageList messages={this.state.messages}/>
-          <ChatBar currentUser={this.state.currentUser} _handleNewMessage={this._handleNewMessage} _handleUsernameChange={this._handleUsernameChange}/>
+          <NavBar userCount={this.state.userCount} />
+          <MessageList messages={this.state.messages} />
+          <ChatBar currentUser={this.state.currentUser} _handleNewMessage={this._handleNewMessage} _handleUsernameChange={this._handleUsernameChange} />
       </div>
     );
   }
+
 }
 
 export default App;
