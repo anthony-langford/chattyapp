@@ -16,26 +16,22 @@ class App extends Component {
     // New message
     ws.addEventListener('message', (event) => {
       let data = JSON.parse(event.data);
+      let messages = this.state.messages.concat(data);
       let type = data.type;
-      if (type === "message") {
-        console.log(`Received from server: ${event.data}`);
-        let messages = this.state.messages.concat(data);
-        this.setState({messages: messages});
-      }
-    });
-
-
-    // Update username
-    ws.addEventListener('message', (event) => {
-      let data = JSON.parse(event.data);
-      let type = data.type;
-      if (type === "updateUsername") {
-        console.log(`Received from server: ${event.data}`);
-        let newUser = data.newUsername;
-        let messages = this.state.messages.concat(data);
-        this.setState({messages: messages});
-      }
-    });
+      switch(type) {
+        case "incomingMessage":
+          console.log(`Received from server: ${event.data}`);
+          this.setState({messages: messages});
+          break;
+        case "incomingNotification":
+          console.log(`Received from server: ${event.data}`);
+          let newUser = data.newUsername;
+          this.setState({messages: messages});
+          break;
+        default:
+          throw new Error("Unknown event type " + data.type);
+        }
+      });
 
     ws.addEventListener('error', (error) => {
       console.log(`Error: ${error}`)
@@ -51,6 +47,19 @@ class App extends Component {
       const messages = this.state.messages.concat(newMessage);
       this.setState({messages: messages})
     }, 3000);
+
+    setTimeout(() => {
+      console.log("Simulating incoming message");
+      const newMessage = {
+        id: uuid.v1(),
+        username: "Bob",
+        content: "fuck off, Michelle"
+      };
+      const messages = this.state.messages.concat(newMessage);
+      this.setState({messages: messages})
+    }, 5000);
+
+
   }
 
   constructor(props) {
@@ -60,9 +69,8 @@ class App extends Component {
     this._handleUsernameChange = (e) => {
       if (e.key === 'Enter') {
         let username = {
-          type: "updateUsername",
+          type: "postNotification",
           id: uuid.v1(),
-          oldUsername: this.state.currentUser.name,
           newUsername: e.target.value,
           content: this.state.currentUser.name + " changed their name to: " + e.target.value
         };
@@ -75,7 +83,7 @@ class App extends Component {
     this._handleNewMessage = (e) => {
         if (e.key === 'Enter') {
           let message = {
-            type: "message",
+            type: "postMessage",
             id: uuid.v1(),
             username: this.state.currentUser.name,
             content: e.target.value
