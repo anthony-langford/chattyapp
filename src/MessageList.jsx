@@ -6,7 +6,6 @@ class MessageList extends Component {
     console.log("Rendering <MessageList/>");
 
     return (
-
       <div id="message-list">
         {
           this.props.messages.map( (message) => {

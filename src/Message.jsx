@@ -6,8 +6,8 @@ class Message extends Component {
     let content = this.props.content;
     let imgNumber = 0;
 
+    // Renders image content
     const renderContentWithImages = (content) => {
-      // hello there is a http://placehold.it/300x200.jpg ok great
       content = content.split(" ");
       content = content.map((word) => {
         return getImageTag(word);
@@ -15,6 +15,7 @@ class Message extends Component {
       return content;
     }
 
+    // Returns img tags for imgurls
     const getImageTag = (str) =>  {
       const urlMatch = str.match(/(https?:)?\/\/[^\s]+(jpeg|jpg|png|gif|bmp)/ig);
       if (urlMatch == null) {
@@ -25,6 +26,7 @@ class Message extends Component {
       }
     }
 
+    // Checks if content has imgurls
     if (content.match(/(https?:)?\/\/[^\s]+(jpeg|jpg|png|gif|bmp)/ig)) {
       return (
         <div className="message content">
