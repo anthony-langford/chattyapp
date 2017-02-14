@@ -1,28 +1,111 @@
-html, body { max-height: 100vh; max-width: 100vw; font-family: 'Open Sans', sans-serif;}
-    .wrapper { font-size: 14px; }
-    nav { height: 40px; padding: 8px; border-bottom: 1px solid black; background-color: tomato; }
-    nav h1 { margin: 0; }
-    nav div { float: right; font-size: 14px; padding: 12px; margin: 0; }
-    #message-list { height: calc(100vh - 131px); padding: 16px 8px;}
-    #message-list .message { padding: 4px 0;  display: flex;}
-    #message-list .message .username,#message-list .message .content {
-      display: inline-block; padding: 4px 0;
-    }
-    #message-list .message .username { flex: 15; margin-right: 16px; overflow: hidden; font-weight: 700;}
-    #message-list .message .content { flex: 85; }
-    #message-list .message .content .img { width: 40% }
-    #message-list .message .system { font-weight: 400; font-style: italic; }
-    footer {
-      height: 41px;
-      border-top: 1px solid black;
-      background-color: tomato;
-      display: flex; align-items: center;
-    }
-    footer input {
-      border: 1px solid black;
-      margin: 4px;
-      height: 20px;
-      padding: 4px 8px;
-    }
-    footer #username { flex: 3; }
-    footer #new-message { flex: 7; }
+// html, body { max-height: 100vh; max-width: 100vw; font-family: 'Open Sans', sans-serif;}
+//   .wrapper { font-size: 14px; }
+//   nav { height: 40px; padding: 8px; border-bottom: 1px solid black; background-color: tomato; }
+//   nav h1 { margin: 0; }
+//   nav div { float: right; font-size: 14px; padding: 12px; margin: 0; }
+//     #message-list { height: calc(100vh - 131px); padding: 16px 8px;}
+//     #message-list .message { padding: 4px 0;  display: flex;}
+//     #message-list .message .username,#message-list .message .content {
+//       display: inline-block; padding: 4px 0;
+//     }
+//     #message-list .message .username { flex: 15; margin-right: 16px; overflow: hidden; font-weight: 700;}
+//     #message-list .message .content { flex: 85; }
+//     #message-list .message .content .img { width: 40% }
+//     #message-list .message .system { font-weight: 400; font-style: italic; }
+//   footer {
+//     height: 41px;
+//     border-top: 1px solid black;
+//     background-color: tomato;
+//     display: flex; align-items: center;
+//   }
+//   footer input {
+//     border: 1px solid black;
+//     margin: 4px;
+//     height: 20px;
+//     padding: 4px 8px;
+//   }
+//   footer #username { flex: 3; }
+//   footer #new-message { flex: 7; }
+
+html, body {
+  background: white;
+  color: black;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  margin: 70px 0;
+}
+.wrapper {
+  font-size: 14px;
+}
+nav {
+  background: tomato;
+  border-bottom: 1px solid black;
+  height: 60px;
+  left: 0;
+  padding: 0 10px;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+nav h1 {
+  margin: 0;
+  padding: 0 10px;
+  line-height: 60px;
+}
+nav div {
+  float: right;
+  font-size: 14px;
+  padding: 12px;
+  margin: 0;
+}
+#message-list {
+  height: calc(100vh - 131px);
+}
+#message-list .message {
+  display: flex;
+  padding: 5px;
+}
+#message-list .message .username,#message-list .message .content {
+  overflow: hidden;
+  margin: 5px;
+  padding: 0 10px;
+}
+#message-list .message .username {
+  flex: 2;
+  font-weight: 700;
+}
+#message-list .message .content {
+  flex: 8;
+}
+#message-list .message .content .img {
+  width: 40%
+}
+#message-list .message .system {
+  font-style: italic;
+  padding: 5px 20px;
+}
+footer {
+  background: tomato;
+  border-top: 1px solid black;
+  bottom: 0;
+  display: flex;
+  left: 0;
+  padding: 5px;
+  position: fixed;
+  right: 0;
+}
+footer input {
+  border: 1px solid black;
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  margin: 5px;
+  padding: 0 9px;
+}
+footer #username {
+  flex: 2;
+}
+footer #new-message {
+  flex: 8;
+}
+

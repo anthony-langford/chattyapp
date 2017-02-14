@@ -34,13 +34,11 @@ wss.on('connection', (ws) => {
   console.log({userCount: userCount});
 
   wss.clients.forEach(function each(client) {
-    if (client.readyState === WebSocket.OPEN) {
       client.send(JSON.stringify({
         type: "updateUserCount",
         userCount: userCount,
         userColor: userColor
       }));
-    }
   });
 
   ws.on('message', function broadcast(data) {
@@ -79,12 +77,10 @@ wss.on('connection', (ws) => {
     console.log({userCount: userCount});
 
     wss.clients.forEach(function each(client) {
-      if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify({
           type: "updateUserCount",
           userCount: userCount
         }));
-      }
     });
   });
 

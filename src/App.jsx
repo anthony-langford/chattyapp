@@ -35,35 +35,12 @@ class App extends Component {
           break;
         default:
           throw new Error("Unknown event type " + data.type);
-        }
-      });
+      }
+    });
 
     ws.addEventListener('error', (error) => {
       console.log(`Error: ${error}`)
     });
-
-    setTimeout(() => {
-      console.log("Simulating incoming message");
-      const newMessage = {
-        id: uuid.v1(),
-        username: "Michelle",
-        content: "Hello there!",
-      };
-      const messages = this.state.messages.concat(newMessage);
-      this.setState({messages: messages})
-    }, 3000);
-
-    setTimeout(() => {
-      console.log("Simulating incoming message");
-      const newMessage = {
-        id: uuid.v1(),
-        username: "Bob",
-        content: "fuck off, Michelle https://yt3.ggpht.com/-V92UP8yaNyQ/AAAAAAAAAAI/AAAAAAAAAAA/zOYDMx8Qk3c/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"
-      };
-      const messages = this.state.messages.concat(newMessage);
-      this.setState({messages: messages})
-    }, 5000);
-
   }
 
   constructor(props) {
