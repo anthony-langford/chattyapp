@@ -47,32 +47,28 @@ class App extends Component {
     super(props);
 
     // On username field enter
-    this._handleUsernameChange = (e) => {
-      if (e.key === 'Enter') {
-        let username = {
-          type: "postNotification",
-          id: uuid.v1(),
-          newUsername: e.target.value,
-          content: this.state.currentUser.name + " changed their name to: " + e.target.value
-        };
-        this.state.currentUser.name = e.target.value;
-        ws.send(JSON.stringify(username));
-      }
+    this._handleUsernameChange = (newUserName) => {
+      let username = {
+        type: "postNotification",
+        id: uuid.v1(),
+        newUsername: newUserName,
+        content: this.state.currentUser.name + " changed their name to: " + newUserName
+      };
+      this.setState({currentUser: {name: newUserName}})
+      ws.send(JSON.stringify(username));
     }
 
     // On chatbar field enter
-    this._handleNewMessage = (e) => {
-        if (e.key === 'Enter') {
-          let message = {
-            type: "postMessage",
-            id: uuid.v1(),
-            username: this.state.currentUser.name,
-            content: e.target.value,
-            style: {color: this.state.userColor}
-          };
-          ws.send(JSON.stringify(message));
-          document.getElementById("new-message").value = "";
-        }
+    this._handleNewMessage = (newMessage) => {
+      let message = {
+        type: "postMessage",
+        id: uuid.v1(),
+        username: this.state.currentUser.name,
+        content: newMessage,
+        style: {color: this.state.userColor}
+      };
+      ws.send(JSON.stringify(message));
+      document.getElementById("new-message").value = "";
     }
 
     this.state = {
@@ -89,7 +85,7 @@ class App extends Component {
       <div className="wrapper">
           <NavBar userCount={this.state.userCount} />
           <MessageList messages={this.state.messages} />
-          <ChatBar currentUser={this.state.currentUser} _handleNewMessage={this._handleNewMessage} _handleUsernameChange={this._handleUsernameChange} />
+          <ChatBar currentUser={this.state.currentUser} handleNewMessage={this._handleNewMessage} handleUserChange={this._handleUsernameChange} />
       </div>
     );
   }
