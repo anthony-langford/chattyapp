@@ -1,6 +1,9 @@
 ChattyApp
 =====================
 
+A chat app built on React and websockets.
+
+
 Clone the app
 
 ```
